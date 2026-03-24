@@ -14,15 +14,25 @@ const startBtn = document.getElementById('startBtn')
 const messageEl = document.getElementById('message')
 const trackEl = document.getElementById('track')
 
+const tortoiseWinsEl = document.getElementById('tortoiseWins')
+const hareWinsEl = document.getElementById('hareWins')
+
 let tortoisePosition = 1
 let harePosition = 1
 let raceIntervalId = null
 let stepCount = 0
 
+//adding tortoise and hare wins
+let tortoiseWins = 0
+let hareWins = 0
+
 
 startBtn.addEventListener("click", StartRace)
 
 function StartRace(){
+
+    tortoisePosition = 1
+    harePosition = 1
 
     messageEl.textContent = "BANG!!!! AND THEY'RE OFF!!"
 
@@ -125,19 +135,31 @@ function renderTrack(){
     }
 }
 
-   function showResult(){
 
-            if (tortoisePosition >= Track_Length && harePosition >= Track_Length){
-                messageEl.textContent = "It's a tie!!"
-
-            } else if (tortoisePosition >= Track_Length){
-                messageEl.textContent = 'TORTOISE WINS!!!!'
-            } else if (harePosition >= Track_Length){
-                messageEl.textContent = 'Hare wins, booooo'
-            } else {
-                messageEl.textContent = 'try racing again'
-            }
-    
+function renderScore() {
+    tortoiseWinsEl.textContent = tortoiseWins
+    hareWinsEl.textContent = hareWins
 }
 
-renderTrack();
+function showResult(){
+
+    if (tortoisePosition >= Track_Length && harePosition >= Track_Length){
+        messageEl.textContent = "It's a tie!!"
+
+    } else if (tortoisePosition >= Track_Length){
+        tortoiseWins++
+        messageEl.textContent = 'TORTOISE WINS!!!!'
+
+    } else if (harePosition >= Track_Length){
+        hareWins++
+        messageEl.textContent = 'Hare wins, booooo'
+
+    } else {
+        messageEl.textContent = 'try racing again'
+    }
+
+    renderScore()
+}
+
+renderTrack()
+renderScore()
